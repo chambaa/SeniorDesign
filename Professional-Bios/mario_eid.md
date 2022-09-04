@@ -20,7 +20,8 @@ Systems Engineering Intern, August 2021 – December 2021
 *	Implemented and contributed to P&G’s System Engineering Model and methodology
 *	Learned and utilized software’s (Rhapsody) to map various production systems 
 *	Communicated with various subject matter experts to construct simplified processes
-Database/Product Supply Engineering Intern				December 2020 – April 2021
+
+Database/Product Supply Engineering Intern, December 2020 – April 2021
 *	Collaborated with P&G to complete regional projects in relation to the systems of supply chain 
 *	Utilized database methods (Azure Databricks) as well as machine learning software (Knime) to develop tables used for standard applications
 *	Communicated on team-oriented projects that focused on the data analysis of supply chain
