@@ -14,5 +14,9 @@
     * Major: Computer Science
     * Email: kleinrj@mail.uc.edu
 
+* Mario Eid
+   * Major: Computer Science
+   * Email: eidmj@mail.uc.edu
+
 ## Project Topic Area
 * Web/mobile app devleopment
