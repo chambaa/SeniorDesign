@@ -10,5 +10,9 @@
     * Major: Computer Science
     * Email: uffermvg@mail.uc.edu
 
+* Reed Klein
+    * Major: Computer Science
+    * Email: kleinrj@mail.uc.edu
+
 ## Project Topic Area
 * Web/mobile app devleopment
