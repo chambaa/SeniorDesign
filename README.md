@@ -24,7 +24,7 @@ MARV is a web applicatin that allows users to determine the public opinion by ge
 [Level 1](./Design_diagrams/D1.png)<br/>
 [Level 2](./Design_diagrams/D2.png)<br/>
 
-## Description of the Diagrams: including conventions and a brief description of the purpose of each component.
+## Description of the Diagrams
 * 0: High level overview of the system. The webapp recieves data from the user and the Twitter API and outputs the map of public opinion.
 * 1: This diagram shows how the Sentiment Analysis and Twitter APIs work together to determine the public opinion.
 * 2: This diagram goes more indepth about how the system will determine the relevance of a tweet and place the sentiment analysis on the map.
