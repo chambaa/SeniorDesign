@@ -58,4 +58,14 @@ There has been no expenses on this project to date. We have been using free APIs
 
 ## Appendix
 ### References and Citations
+* [Sentiment Analysis API](https://rapidapi.com/fyhao/api/text-sentiment-analysis-method)
+* [Emotion Analysis API](https://rapidapi.com/twinword/api/emotion-analysis/)
+* [JavaScript Dynamic maps](https://www.youtube.com/watch?v=hRoiG4ZIzeM)
+* [Visits Website](http://v.isits.in/)
+* [Tweet Location](https://developer.twitter.com/en/docs/tutorials/filtering-tweets-by-location)
+* [Map data visualizations](https://www.tableau.com/learn/articles/interactive-map-and-data-visualization-examples)
+* [React Map Libraries](https://blog.bitsrc.io/top-5-map-libraries-for-react-in-2021-20a37ff5234)
 ### Code repositories
+* [React Leaflet Examples](https://github.com/tomik23/react-leaflet-examples)
+* [React Simple Maps Example](https://github.com/zcreativelabs/react-simple-maps)
+* [Twitter API Example](https://github.com/twitterdev/Twitter-API-v2-sample-code)
