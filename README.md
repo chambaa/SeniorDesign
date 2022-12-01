@@ -71,3 +71,24 @@ There has been no expenses on this project to date. We have been using free APIs
 * [React Leaflet Examples](https://github.com/tomik23/react-leaflet-examples)
 * [React Simple Maps Example](https://github.com/zcreativelabs/react-simple-maps)
 * [Twitter API Example](https://github.com/twitterdev/Twitter-API-v2-sample-code)
+### Meeting Notes
+| Date    | Time    | Description | Attendance |
+|---------|---------|-------------|------------|
+| 8/31/22 | 1 hr | Determined project topic and started repo | ALL |
+| 9/7/22 	| 2 hrs |	Wrote team contract. Determined consistent meeting schedule. Deeper discussion about project topic. Determined roles	| ALL |
+| 9/12/22 |	1 hr	| Met with project advisor. Talked through project idea and team contract. |	Anna, Veronica, Mario |
+| 9/14/22 |	3 hrs	| Discussed system in detail and created design diagrams |	ALL |
+| 9/19/22	| 1 hr	| Met with faculty advisor to go over design diagrams and vision for the system. Discussed map data visualization examples |	ALL |
+| 9/21/22 |	2 hrs |	Created task list and assigned people to each	| ALL |
+| 9/26/22	| 1 hr	| Went over task list and next steps for project. Agreed to all find examples of good map visualizations for inspiration.	| Anna, Veronica, Reed |
+| 10/5/22	| 3 hrs |	Determined milestones, created timeline and effort matrix. Assigned team members to take lead on certain areas of the project.	| ALL |
+| 10/10/22	| 1 hr |	Met with faculty advisor to go over milestones and timeline.	| Anna, Veronica |
+| 10/19/22 |	2 hrs |	Determined who would do what for the constrains essay and wrote essay |	ALL |
+| 10/26/22 |	3 hrs |	Worked on presentation PowerPoint. Wrote project abstract and expected accomplishments |	ALL |
+| 10/31/22	| 1 hr |	Recorded presentation |	ALL |
+| 11/4/22	| 1 hr |	Met with faculty advisor to go over presentation and work done so far this semester. Also gave faculty advisor assessment form	| ALL |
+| 11/18/22	| 1 hr |	Met with faculty advisor to show additional work done with sentiment analysis and Twitter APIs. Discussed backup plans for the project considering the ongoing Twitter changes |	Anna, Veronica |
+| 11/28/22	| 1 hr |	Put together final report |	ALL |
+
+** The additional 20 hours per person is from individual project work including individual essays, research, tutorials, and implementation of assigned tasks.
+
