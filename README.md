@@ -22,19 +22,20 @@ MARV is a web applicatin that allows users to determine the public opinion by ge
 [User Stories](./User_Stories.md)
 
 ### Design Diagrams
-* [Level 0](./Design_diagrams/D0.png)
-* [Level 1](./Design_diagrams/D1.png)
-* [Level 2](./Design_diagrams/D2.png)
+* [Level 0](./Design_Diagrams/D0.png)
+* [Level 1](./Design_Diagrams/D1.png)
+* [Level 2](./Design_Diagrams/D2.jpg)
+* [ALL](./Design_Diagrams/Design_diagrams.pdf)
 
 ### Description of the Diagrams
 * 0: High level overview of the system. The webapp recieves data from the user and the Twitter API and outputs the map of public opinion.
 * 1: This diagram shows how the Sentiment Analysis and Twitter APIs work together to determine the public opinion.
 * 2: This diagram goes more indepth about how the system will determine the relevance of a tweet and place the sentiment analysis on the map.
-  * Descriptions of the conventions and components are found in the legend in [Level 2](./Design_diagrams/D2.png)
+  * Descriptions of the conventions and components are found in the legend in [Level 2](./Design_Diagrams/D2.jpg)
 
 ## Project Tasks and Timeline
 * [Project Tasks](./Tasklist.md)
-* [Timeline](./Milestones-Timeline-EffortMatrix.md)
+* [Timeline](./Milestones-Timeline-EffortMatrix.md#Timeline)
 * [Effort Matrix](./Milestones-Timeline-EffortMatrix.md)
 
 ## ABET Concerns Essay
