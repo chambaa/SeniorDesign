@@ -1,5 +1,6 @@
 # MARV
-## Team names
+## Team names and Project Abstract
+### Team names
 * Anna Chambers 
   * chambaa@mail.uc.edu
 * Mario Eid
@@ -10,21 +11,22 @@
   * uffermvg@mail.uc.edu
 * Project Advisor: Jillian Aurisano
 
-## Project Abstract
+### Project Abstract
 The goal of this project is to create a web application that uses twitter and sentiment analysis to determine the public opinion about businesses, products, and people based on location. Once the public opinion has been determined, we will use data visualization to display the sentiment analysis based on geographic location. In addition to being able to see the public opinion, the users will be able to see what other words are associated with their object of interest. This product is intended to be used by businesses to analyze their products, and the public to decide where to work or what to buy.
 
 ## Project Description
 MARV is a web applicatin that allows users to determine the public opinion by geographic location of the item or company they are interested in researching.
 
 ## User Stories and Design Diagrams
+### User Stories
 [User Stories](./User_Stories.md)
 
-### Design Diagrams: 
-[Level 0](./Design_diagrams/D0.png)<br/>
-[Level 1](./Design_diagrams/D1.png)<br/>
-[Level 2](./Design_diagrams/D2.png)<br/>
+### Design Diagrams
+* [Level 0](./Design_diagrams/D0.png)
+* [Level 1](./Design_diagrams/D1.png)
+* [Level 2](./Design_diagrams/D2.png)
 
-## Description of the Diagrams
+### Description of the Diagrams
 * 0: High level overview of the system. The webapp recieves data from the user and the Twitter API and outputs the map of public opinion.
 * 1: This diagram shows how the Sentiment Analysis and Twitter APIs work together to determine the public opinion.
 * 2: This diagram goes more indepth about how the system will determine the relevance of a tweet and place the sentiment analysis on the map.
