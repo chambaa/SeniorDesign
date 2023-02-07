@@ -1,7 +1,7 @@
 const fetch = require('node-fetch')
 exports.handler = async function(event, context) {
   try {
-    const token = "***Add Bearer Token Here***";
+    const token = "*** ADD BEARER TOKEN ***";
     const headers = {
       "User-Agent": "v2RecentSearchJS",
       "authorization": `Bearer ${token}`,  

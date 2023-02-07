@@ -1,15 +1,12 @@
 import axios from "axios";
-import React, { useState, useEffect }  from 'react';
-import data from "./testdata.json"
+import React from 'react';
 
-function SentimentAnalysis() {
-    const [sentimentType, setSentimentType] = useState('');
-    const [text, setText] = useState('');
+function SentimentAnalysis(twitterData) {
     var optionsArray = [];
     var objects = [];
 
-    data.results.map(tweet => {
-        var text = tweet[5]
+    twitterData.data.data.map(tweet => {
+        var text = tweet.text;
         const encodedParams = new URLSearchParams();
         encodedParams.append("text", text);
     
@@ -26,50 +23,40 @@ function SentimentAnalysis() {
         optionsArray.push(options)
     })
 
-    useEffect(() => {
-        optionsArray.map(options => {
-            axios.request(options).then(function (response) {
-                // setText(response.data.text);
-                if(response.data.pos > 0) {
-                    // setSentimentType("Positive");
-                    var obj = {
-                        "text": response.data.text,
-                        "sentiment": "Positive"
-                    }
-                    objects.push(obj);
+    optionsArray.map(options => {
+        axios.request(options).then(function (response) {
+            if(response.data.pos > 0) {
+                var obj = {
+                    "text": response.data.text,
+                    "sentiment": "Positive"
                 }
-                else if(response.data.neg > 0) {
-                    // setSentimentType("Negative");
-                    var obj = {
-                        "text": response.data.text,
-                        "sentiment": "Negative"
-                    }
-                    objects.push(obj);
+                objects.push(obj);
+            }
+            else if(response.data.neg > 0) {
+                var obj = {
+                    "text": response.data.text,
+                    "sentiment": "Negative"
                 }
-                else if(response.data.mid > 0) {
-                    // setSentimentType("Neutral");
-                    var obj = {
-                        "text": response.data.text,
-                        "sentiment": "Neutral"
-                    }
-                    objects.push(obj);
+                objects.push(obj);
+            }
+            else if(response.data.mid > 0) {
+                var obj = {
+                    "text": response.data.text,
+                    "sentiment": "Neutral"
                 }
+                objects.push(obj);
+            }
 
-            }).catch(function (error) {
-            console.error(error);
-            });
+        }).catch(function (error) {
+        console.error(error);
+        });
 
-        })
-        console.log(objects)
-
-    }, [sentimentType, text, optionsArray])
-
+    })
+    console.log(objects)
 
 
     return (
       <div className="SentimentAnalysis">
-        <h1>{text}</h1>
-        <h2>{sentimentType}</h2>
       </div>
     );
   }

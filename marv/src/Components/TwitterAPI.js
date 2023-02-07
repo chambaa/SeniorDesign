@@ -1,4 +1,5 @@
 import React from 'react';
+import SentimentAnalysis from './SentimentAnalysis';
 
 async function TwitterAPI(keyword) {
         await fetch("/.netlify/functions/TwitterFetch", {     
@@ -16,12 +17,12 @@ async function TwitterAPI(keyword) {
         .then(function(response) {
           // The response is a Response instance.
           // You parse the data into a useable format using `.json()`
-          var test = response.json();
-          // setMsg(test);
-          return test;
+          var resJson = response.json();
+          return resJson;
         }).then(function(data) {
           // `data` is the parsed version of the JSON returned from the above endpoint.
           console.log(data);
+          SentimentAnalysis(data);
         })
         .catch(error => {
             console.error('There was an error!', error);
