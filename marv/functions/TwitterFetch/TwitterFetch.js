@@ -6,7 +6,7 @@ exports.handler = async function(event, context) {
       "User-Agent": "v2RecentSearchJS",
       "authorization": `Bearer ${token}`,  
     }
-    const response = await fetch(`https://api.twitter.com/2/tweets/search/recent?query=${event.body}&tweet.fields=author_id,created_at,entities,geo,in_reply_to_user_id,lang,possibly_sensitive,referenced_tweets,source`, {headers: headers})
+    const response = await fetch(`https://api.twitter.com/2/tweets/search/recent?query=${event.body}%20lang%3Aen&max_results=10&tweet.fields=author_id,created_at,entities,geo,in_reply_to_user_id,lang,possibly_sensitive,referenced_tweets,source`, {headers: headers})
     if (!response.ok) {
       // NOT res.status >= 200 && res.status < 300
       return { statusCode: response.status, body: response.statusText }
