@@ -12,8 +12,7 @@ const PieChart = props => {
     .arc()
     .innerRadius(props.innerRadius)
     .outerRadius(props.outerRadius);
-  const colors = d3.scaleOrdinal(d3.schemeCategory10);
-  const format = d3.format(".2f");
+  const colors = d3.scaleOrdinal().domain(["Positive", "Negative", "Neutral", "Undefined"]).range(["green", "red", "gray", "gray"])
 
   useEffect(
     () => {
@@ -41,7 +40,7 @@ const PieChart = props => {
 
       path
         .attr("class", "arc")
-        .attr("fill", (d, i) => colors(i))
+        .attr("fill", (d, i) => colors(d.data.property))
         .transition()
         .attrTween("d", arcTween);
 
@@ -56,11 +55,7 @@ const PieChart = props => {
         .style("font-size", 10)
         .transition()
         .attr("transform", d => `translate(${createArc.centroid(d)})`)
-        .tween("text", (d, i, nodes) => {
-          const interpolator = d3.interpolate(prevData[i], d);
-
-          return t => d3.select(nodes[i]).text(format(interpolator(t).value));
-        });
+        .text(function(d){ return d.data.property; });
 
       cache.current = props.data;
     },
