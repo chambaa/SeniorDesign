@@ -1,11 +1,10 @@
 import axios from "axios";
 import React from 'react';
 
-function SentimentAnalysis(twitterData) {
-    var optionsArray = [];
-    var objects = [];
-
-    twitterData.data.data.map(tweet => {
+async function SentimentAnalysis(twitterData) {
+    const promises = [];
+  
+    for (const tweet of twitterData.data.data) {
         var text = tweet.text;
         const encodedParams = new URLSearchParams();
         encodedParams.append("text", text);
@@ -20,45 +19,39 @@ function SentimentAnalysis(twitterData) {
             },
             data: encodedParams
         };
-        optionsArray.push(options)
-    })
-
-    optionsArray.map(options => {
-        axios.request(options).then(function (response) {
-            if(response.data.pos > 0) {
-                var obj = {
-                    "text": response.data.text,
-                    "sentiment": "Positive"
-                }
-                objects.push(obj);
+        promises.push(axios.request(options));
+    }
+  
+    const responses = await Promise.all(promises);
+  
+    const data = [];
+  
+    for (const response of responses) {
+        console.log("called")
+        if(response.data.pos > 0) {
+            var objPos = {
+                "text": response.data.text,
+                "sentiment": "Positive"
             }
-            else if(response.data.neg > 0) {
-                var obj = {
-                    "text": response.data.text,
-                    "sentiment": "Negative"
-                }
-                objects.push(obj);
+            data.push(objPos);
+        }
+        else if(response.data.neg > 0) {
+            var objNeg = {
+                "text": response.data.text,
+                "sentiment": "Negative"
             }
-            else if(response.data.mid > 0) {
-                var obj = {
-                    "text": response.data.text,
-                    "sentiment": "Neutral"
-                }
-                objects.push(obj);
+            data.push(objNeg);
+        }
+        else if(response.data.mid > 0) {
+            var objMid = {
+                "text": response.data.text,
+                "sentiment": "Neutral"
             }
-
-        }).catch(function (error) {
-        console.error(error);
-        });
-
-    })
-    console.log(objects)
-
-
-    return (
-      <div className="SentimentAnalysis">
-      </div>
-    );
+            data.push(objMid);
+        }
+    }
+  
+    return data;
   }
   
   export default SentimentAnalysis;
