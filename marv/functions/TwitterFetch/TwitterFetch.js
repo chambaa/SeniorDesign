@@ -1,7 +1,7 @@
 const fetch = require('node-fetch')
 exports.handler = async function(event, context) {
   try {
-    const token = "AAAAAAAAAAAAAAAAAAAAAIRBlgEAAAAAPvLMD1preciSbH%2FDoh8P7uUWg9Q%3DQT5vGKJ2QPe1mJAUEDRdQBIrNC0tijOOp6dz92jkasFZ0wMM85";
+    const token = "AAAAAAAAAAAAAAAAAAAAAKu0jAEAAAAA6%2Bju4OgNTnfOFFT9bFGb41U8Bpw%3DdFAhQWTkPeohazao2Ryd2BvCcx5GBTJZuFpSKgxq3YEPL0egbs";
     const headers = {
       "User-Agent": "v2RecentSearchJS",
       "authorization": `Bearer ${token}`,  
