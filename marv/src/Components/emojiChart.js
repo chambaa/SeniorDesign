@@ -64,6 +64,12 @@ function BarChart({ data }) {
     .domain([0, Math.max(...data.map(({ value }) => value))])
     .range([height, 0]);
 
+  if(data.length == 0){
+    return(
+      <span>No Emojis :&#40;</span>
+    )
+  }
+
   return (
     <svg
       width={width + margin.left + margin.right}
