@@ -2,6 +2,7 @@ import React, { useEffect, useState }  from 'react';
 import 'font-awesome/css/font-awesome.min.css';
 import TwitterAPI from './TwitterAPI';
 import PieChart from './PieChart';
+import Map from './Map';
 
 function KeywordSearch() {
     const [keyword, setKeyword] = useState('');
@@ -15,6 +16,7 @@ function KeywordSearch() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+       
         var sentimentResult = await TwitterAPI(keyword)
 
         sentimentResult.map(result => {
@@ -60,6 +62,9 @@ function KeywordSearch() {
           innerRadius={60}
           outerRadius={100}
         />
+        <Map 
+          keyword = {keyword}
+          />
       </div>
     );
   }
