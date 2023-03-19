@@ -2,62 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { GoogleMap, useJsApiLoader, Marker, InfoWindow, LoadScript } from '@react-google-maps/api';
 import axios from 'axios';
 import './map.css'
-// import "https://maps.googleapis.com/maps/api/js?key=js?key=AIzaSyBgt_ybrpI0hzarHDx7Og1LkV5mS8lheQw&libraries=places";
-// const Map = props => {
-//     var map;
-//       var service;
-//       var infowindow;
-
-//       function initMap() {
-//         map = new google.maps.Map(document.getElementById('map'), {
-//           center: {lat: 37.7749, lng: -122.4194},
-//           zoom: 15
-//         });
-
-//         var request = {
-//           query: document.getElementById('search').value,
-//           fields: ['name', 'geometry'],
-//         };
-
-//         service = new google.maps.places.PlacesService(map);
-
-//         service.findPlaceFromQuery(request, function(results, status) {
-//           if (status === google.maps.places.PlacesServiceStatus.OK) {
-//             for (var i = 0; i < results.length; i++) {
-//               createMarker(results[i]);
-//             }
-//             map.setCenter(results[0].geometry.location);
-//           }
-//         });
-//       }
-
-//       function createMarker(place) {
-//         var marker = new google.maps.Marker({
-//           map: map,
-//           position: place.geometry.location
-//         });
-
-//         google.maps.event.addListener(marker, 'click', function() {
-//           if (!infowindow) {
-//             infowindow = new google.maps.InfoWindow();
-//           }
-//           infowindow.setContent(place.name);
-//           infowindow.open(map, this);
-//         });
-//       }
-//       return(
-//     <div onload="initMap()">
-//         <input type="text" id="search" value="San Francisco" />
-//         <div id="map" style="height: 500px; width: 100%;"></div>
-//     </div>
-
-//       );
-//     }
-
-//       export default Map;
-
-// import React from 'react'
-//import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 
 const containerStyle = {
   width: '50%',
@@ -121,21 +65,6 @@ const Map = props => {
   const onUnmount = React.useCallback(function callback(map) {
     setMap(null)
   }, [])
-
-  // var request = {
-  //   query: document.getElementById('search').value,
-  //   fields: ['name', 'geometry', 'rating'],
-  // };
-
-  // service = new google.maps.places.PlacesService(map);
-
-  // service.findPlaceFromQuery(request, function(results, status) {
-  //   if (status === google.maps.places.PlacesServiceStatus.OK) {
-  //     for (var i = 0; i < results.length; i++) {
-  //       createMarker(results[i]);
-  //     }
-  //     map.setCenter(results[0].geometry.location);
-  //   }
 
   return isLoaded ? (
       <GoogleMap
