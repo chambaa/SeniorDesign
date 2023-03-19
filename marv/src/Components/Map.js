@@ -147,7 +147,34 @@ const Map = props => {
         yesIWantToUseGoogleMapApiInternals
         onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
       >
-        { /* Child components, such as markers, info windows, etc. */ }
+        {stores.map((store, index) => (
+    <Marker
+      key={index}
+      position={{
+        lat: store.geometry.location.lat,
+        lng: store.geometry.location.lng
+      }}
+      onClick={() => {
+        setSelectedStore(store);
+      }}
+    />
+  ))}
+  {selectedStore && (
+    <InfoWindow
+      position={{
+        lat: selectedStore.geometry.location.lat,
+        lng: selectedStore.geometry.location.lng
+      }}
+      onCloseClick={() => {
+        setSelectedStore(null);
+      }}
+    >
+      <div>
+        <h2>{selectedStore.name}</h2>
+        <p>Rating: {selectedStore.rating}</p>
+      </div>
+      </InfoWindow>
+  )}
         <></>
       </GoogleMap>
   ) : <></>
