@@ -21,19 +21,20 @@ const Map = props => {
     googleMapsApiKey: "AIzaSyBgt_ybrpI0hzarHDx7Og1LkV5mS8lheQw"
   })
 
+  const [selectedStore, setSelectedStore] = useState(null);
   const [stores, setStores] = useState([]);
 
   useEffect(() => {
     const fetchStores = async () => {
       try {
         const res = await axios.get(
-          `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${props.keyword}&key=${"AIzaSyBgt_ybrpI0hzarHDx7Og1LkV5mS8lheQw"}`
+          `/.netlify/functions/getStores?keyword=${props.keyword}`
         );
-        setStores(res.data.results);
+        setStores(res.data);
       } catch (err) {
         console.error(err);
       }
-    };
+    }
 
     fetchStores();
   }, [props.keyword]);
@@ -67,16 +68,21 @@ const Map = props => {
   }, [])
 
   return isLoaded ? (
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={stores && stores.length > 0 && stores[0].geometry && stores[0].geometry.location && { lat: stores[0].geometry.location.lat, lng: stores[0].geometry.location.lng }}
-        zoom={2.5}
-        onLoad={onLoad}
-        onUnmount={onUnmount}
-        yesIWantToUseGoogleMapApiInternals
-        onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
-      >
-        {stores.map((store, index) => (
+    <GoogleMap
+    mapContainerStyle={containerStyle}
+    center={
+      stores && stores.length > 0 && stores[0].geometry && stores[0].geometry.location && {
+        lat: stores[0].geometry.location.lat,
+        lng: stores[0].geometry.location.lng
+      }
+    }
+    zoom={2.5}
+    onLoad={onLoad}
+    onUnmount={onUnmount}
+    yesIWantToUseGoogleMapApiInternals
+    onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
+  >
+         {stores.map((store, index) => (
     <Marker
       key={index}
       position={{
@@ -104,7 +110,6 @@ const Map = props => {
       </div>
       </InfoWindow>
   )}
-        <></>
       </GoogleMap>
   ) : <></>
 }
