@@ -1,131 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { GoogleMap, useJsApiLoader, Marker, InfoWindow, LoadScript } from '@react-google-maps/api';
-import axios from 'axios';
+/* eslint-disable no-undef */
+import React, { useState } from 'react';
+import { GoogleMap, Marker, InfoWindow } from '@react-google-maps/api';
 import './map.css'
 
 const containerStyle = {
   width: '50%',
-  height: '400px'
+  height: '400px',
+  margin: '10px'
 };
-
-const center = {
-  lat: 39.103119,
-  lng: -84.512016
-};
-
-
-
-// const Map = props => {
-//   const { isLoaded } = useJsApiLoader({
-//     id: 'google-map-script',
-//     googleMapsApiKey: "AIzaSyBgt_ybrpI0hzarHDx7Og1LkV5mS8lheQw"
-//   })
-
-//   const [selectedStore, setSelectedStore] = useState(null);
-//   const [stores, setStores] = useState([]);
-
-//   useEffect(() => {
-//     const fetchStores = async () => {
-//       try {
-//         const res = await axios.get(
-//           `/.netlify/functions/getStores?keyword=${props.keyword}`
-//         );
-//         setStores(res.data);
-//       } catch (err) {
-//         console.error(err);
-//       } 
-//     }
-
-//     fetchStores();
-//   }, [props.keyword]);
-
-//   const handleApiLoaded = (map, maps) => {
-//     stores.forEach((store) => {
-//       const marker = new maps.Marker({
-//         position: {
-//           lat: store.geometry.location.lat,
-//           lng: store.geometry.location.lng
-//         },
-//         map,
-//         title: store.name,
-//         label: store.rating.toString()
-//       });
-//     });
-//   };
-
-//   const [map, setMap] = React.useState(null)
-
-//   const onLoad = React.useCallback(function callback(map) {
-//     // This is just an example of getting and using the map instance!!! don't just blindly copy!
-//     const bounds = new window.google.maps.LatLngBounds(center);
-//     map.fitBounds(bounds);
-
-//     setMap(map)
-//   }, [])
-
-//   const onUnmount = React.useCallback(function callback(map) {
-//     setMap(null)
-//   }, [])
-
-//   return isLoaded ? (
-//     <GoogleMap
-//     mapContainerStyle={containerStyle}
-//     center={
-//       stores && stores.length > 0 && stores[0].geometry && stores[0].geometry.location && {
-//         lat: stores[0].geometry.location.lat,
-//         lng: stores[0].geometry.location.lng
-//       }
-//     }
-//     zoom={2.5}
-//     onLoad={onLoad}
-//     onUnmount={onUnmount}
-//     yesIWantToUseGoogleMapApiInternals
-//     onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
-//   >
-//          {stores.map((store, index) => (
-//     <Marker
-//       key={index}
-//       position={{
-//         lat: store.geometry.location.lat,
-//         lng: store.geometry.location.lng
-//       }}
-//       onClick={() => {
-//         setSelectedStore(store);
-//       }}
-//     />
-//   ))}
-//   {selectedStore && (
-//     <InfoWindow
-//       position={{
-//         lat: selectedStore.geometry.location.lat,
-//         lng: selectedStore.geometry.location.lng
-//       }}
-//       onCloseClick={() => {
-//         setSelectedStore(null);
-//       }}
-//     >
-//       <div>
-//         <h2>{selectedStore.name}</h2>
-//         <p>Rating: {selectedStore.rating}</p>
-//       </div>
-//       </InfoWindow>
-//   )}
-//       </GoogleMap>
-//   ) : <></>
-// }
-
-// export default Map
 
 let coords = [];
 
 const Map = props => {
   const [center, setCenter] = useState({ lat: 39.103119, lng: -84.512016 });
   const [coordsResult, setcoordsResult] = useState([]);
-  // state = {
-  //   center: { lat: 39.103119, lng: -84.512016 },
-  //   coordsResult: []
-  // };
-
 
   const onMapLoad = map => {
     let request = {
@@ -141,42 +29,40 @@ const Map = props => {
           coords.push(results[i]);
         }
 
-        // this.setState({
-        //   center: results[0].geometry.location,
-        //   coordsResult: coords
-        // });
         setCenter(results[0].geometry.location)
         setcoordsResult(coords)
       }
     });
   };
 
-  // render() {
-    return (
-      <div>
-        <GoogleMap
-          center={center}
-          zoom={13}
-          onLoad={map => onMapLoad(map)}
-          mapContainerStyle={{ height: "400px", width: "800px" }}
-        >
-          {coordsResult !== [] &&
-            coordsResult.map(function(results, i) {
-              return (
-                <Marker key={i} position={results.geometry.location}>
-                  <InfoWindow 
-                options={{ maxWidth: 300 }}>
-                    
-                      <span>{results.name}</span>
-                    
-                  </InfoWindow>
-                </Marker>
-              );
-            })}
-        </GoogleMap>
-      </div>
-    );
-  // }
+  return (
+    <div>
+      <GoogleMap
+        center={center}
+        zoom={13}
+        onLoad={map => onMapLoad(map)}
+        mapContainerStyle={containerStyle}
+      >
+        {coordsResult !== [] &&
+          coordsResult.map(function(results, i) {
+            return (
+              <Marker key={i} position={results.geometry.location}>
+                <InfoWindow 
+                    options={{ maxWidth: 300 }}
+                    position={results.geometry.location}
+                >
+                  <div>
+                    <h3>{results.name}</h3>
+                    <h4>Rating: {results.rating}</h4>
+                  </div>
+                  
+                </InfoWindow>
+              </Marker>
+            );
+          })}
+      </GoogleMap>
+    </div>
+  );
 }
 
 export default Map;
