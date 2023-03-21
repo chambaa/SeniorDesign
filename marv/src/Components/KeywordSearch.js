@@ -2,10 +2,13 @@ import React, { useEffect, useState }  from 'react';
 import 'font-awesome/css/font-awesome.min.css';
 import TwitterAPI from './TwitterAPI';
 import PieChart from './PieChart';
+import { LoadScript } from "@react-google-maps/api";
+import Map from './Map';
 import EmojiChart from './emojiChart.js';
 
 function KeywordSearch() {
     const [keyword, setKeyword] = useState('');
+    const [keyword2, setKeyword2] = useState('');
     var pos = 0;
     var neg = 0;
     var neut = 0;
@@ -21,6 +24,7 @@ function KeywordSearch() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+       
         var sentimentResult = await TwitterAPI(keyword)
 
         sentimentResult.map(result => {
@@ -57,10 +61,12 @@ function KeywordSearch() {
 
         console.log(newData)
         setData(newData)
+        setKeyword2(keyword)
         setEmojiData(emojiArr)
         console.log(emojiArr);
-
     }
+    const lib = ["places"];
+    const key = "AIzaSyBgt_ybrpI0hzarHDx7Og1LkV5mS8lheQw"; // PUT GMAP API KEY HERE
     
 
     return (
@@ -88,6 +94,13 @@ function KeywordSearch() {
           width={200}
           height={200}
         />
+        {keyword2 !== '' ?
+          <LoadScript googleMapsApiKey={key} libraries={lib}>
+            <Map 
+              keyword = {keyword2}
+              />
+          </LoadScript> : <div/>
+        }
       </div>
     );
   }
