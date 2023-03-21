@@ -2,10 +2,12 @@ import React, { useEffect, useState }  from 'react';
 import 'font-awesome/css/font-awesome.min.css';
 import TwitterAPI from './TwitterAPI';
 import PieChart from './PieChart';
+import { LoadScript } from "@react-google-maps/api";
 import Map from './Map';
 
 function KeywordSearch() {
     const [keyword, setKeyword] = useState('');
+    const [keyword2, setKeyword2] = useState('');
     var pos = 0;
     var neg = 0;
     var neut = 0;
@@ -39,7 +41,10 @@ function KeywordSearch() {
         ]
         console.log(newData)
         setData(newData)
+        setKeyword2(keyword)
     }
+    const lib = ["places"];
+    const key = "AIzaSyBgt_ybrpI0hzarHDx7Og1LkV5mS8lheQw"; // PUT GMAP API KEY HERE
     
 
     return (
@@ -62,9 +67,13 @@ function KeywordSearch() {
           innerRadius={60}
           outerRadius={100}
         />
-        <Map 
-          keyword = {keyword}
-          />
+        {keyword2 !== '' ?
+        <LoadScript googleMapsApiKey={key} libraries={lib}>
+          <Map 
+            keyword = {keyword2}
+            />
+        </LoadScript> : <div/>
+        }
       </div>
     );
   }
