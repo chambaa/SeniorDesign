@@ -1,4 +1,4 @@
-import React, { useEffect, useState }  from 'react';
+import React, { useState }  from 'react';
 import 'font-awesome/css/font-awesome.min.css';
 import TwitterAPI from './TwitterAPI';
 import PieChart from './PieChart';
@@ -44,7 +44,7 @@ function KeywordSearch() {
             console.log(`emoji detected ${ emoji }`);
             let newValue = true;
             for(var i = 0; i < emojiArr.length; i++){
-              if(emojiArr[i]['property'] == emoji){
+              if(emojiArr[i]['property'] === emoji){
                 emojiArr[i]['value'] += 1;
                 newValue = false;
               }
@@ -53,11 +53,16 @@ function KeywordSearch() {
           }
         })
 
-        var newData = [
-          {property: 'Positive', value: pos * 10},
-          {property: 'Negative', value: neg * 10},
-          {property: 'Neutral', value: neut * 10}
-        ]
+        var newData = [];
+        if(pos > 0) {
+          newData.push({property: 'Positive', value: pos * 10});
+        }
+        if(neg > 0) {
+          newData.push({property: 'Negative', value: neg * 10});
+        }
+        if(neut > 0) {
+          newData.push({property: 'Neutral', value: neut * 10});
+        }
 
         console.log(newData)
         setData(newData)
@@ -82,24 +87,28 @@ function KeywordSearch() {
               </div>
           </form>
         </div>
-        <PieChart 
-          data={data}
-          width={200}
-          height={200}
-          innerRadius={60}
-          outerRadius={100}
-        />
-        <EmojiChart 
-          data={EmojiData}
-          width={200}
-          height={200}
-        />
         {keyword2 !== '' ?
+        <div>
+          <div className='dataVis'>
+            <PieChart 
+              data={data}
+              width={300}
+              height={370}
+              innerRadius={0}
+              outerRadius={150}
+            />
+            <EmojiChart 
+              data={EmojiData}
+              width={200}
+              height={200}
+            />
+          </div>  
           <LoadScript googleMapsApiKey={key} libraries={lib}>
             <Map 
               keyword = {keyword2}
               />
-          </LoadScript> : <div/>
+          </LoadScript> 
+        </div> : <div className='dataVis'><h1>Search for a keyword to show analysis</h1></div>
         }
       </div>
     );
