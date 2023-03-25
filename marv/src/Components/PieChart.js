@@ -12,7 +12,7 @@ const PieChart = props => {
     .arc()
     .innerRadius(props.innerRadius)
     .outerRadius(props.outerRadius);
-  const colors = d3.scaleOrdinal().domain(["Positive", "Negative", "Neutral", "Undefined"]).range(["green", "red", "gray", "gray"])
+  const colors = d3.scaleOrdinal().domain(["Positive", "Negative", "Neutral", "Undefined"]).range(["#79b68b", "#f29900", "gray", "gray"])
 
   useEffect(
     () => {
@@ -63,7 +63,7 @@ const PieChart = props => {
   );
 
   return (
-    <svg width={props.width} height={props.height} style={{margin: "10px"}}>
+    <svg width={props.width} height={props.height}>
       <g
         ref={ref}
         transform={`translate(${props.outerRadius} ${props.outerRadius})`}

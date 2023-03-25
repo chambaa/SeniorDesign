@@ -2,7 +2,6 @@ import React from 'react';
 import SentimentAnalysis from './SentimentAnalysis';
 
 async function TwitterAPI(keyword) {
-  var test = []
   var dataTest;
         await fetch("/.netlify/functions/TwitterFetch", {     
           method: 'POST',

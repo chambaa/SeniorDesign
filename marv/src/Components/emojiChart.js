@@ -48,7 +48,7 @@ function Bars({ data, height, scaleX, scaleY }) {
           y={scaleY(value)}
           width={scaleX.bandwidth()}
           height={height - scaleY(value)}
-          fill="teal"
+          fill="#5491f5"
         />
       ))}
     </>
