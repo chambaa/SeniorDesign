@@ -27,7 +27,6 @@ async function SentimentAnalysis(twitterData) {
     const data = [];
   
     for (const response of responses) {
-        console.log("called")
         if(response.data.pos > 0) {
             var objPos = {
                 "text": response.data.text,
