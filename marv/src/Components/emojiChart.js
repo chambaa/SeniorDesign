@@ -6,7 +6,8 @@ import {
   scaleBand,
   ScaleLinear,
   scaleLinear,
-  select
+  select,
+  format
 } from "d3";
 
 
@@ -15,7 +16,7 @@ function AxisBottom({ scale, transform }) {
 
   useEffect(() => {
     if (ref.current) {
-      select(ref.current).call(axisBottom(scale));
+      select(ref.current).call(axisBottom(scale)).selectAll("text").style("font-size", 20);
     }
   }, [scale]);
 
@@ -25,9 +26,12 @@ function AxisBottom({ scale, transform }) {
 function AxisLeft({ scale }) {
   const ref = useRef(null);
 
+  const yAxisTicks = scale.ticks()
+    .filter(tick => Number.isInteger(tick));
+
   useEffect(() => {
     if (ref.current) {
-      select(ref.current).call(axisLeft(scale));
+      select(ref.current).call(axisLeft(scale).tickValues(yAxisTicks).tickFormat(format('d')));
     }
   }, [scale]);
 
@@ -52,7 +56,7 @@ function Bars({ data, height, scaleX, scaleY }) {
 }
 
 function BarChart({ data }) {
-  const margin = { top: 10, right: 0, bottom: 20, left: 30 };
+  const margin = { top: 10, right: 0, bottom: 30, left: 30 };
   const width = 500 - margin.left - margin.right;
   const height = 300 - margin.top - margin.bottom;
 

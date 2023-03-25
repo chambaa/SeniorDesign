@@ -20,6 +20,7 @@ function KeywordSearch() {
     var posKeywords = {};
 
     const emojiRe = /(\p{EPres}|\p{ExtPict})/gu;
+    const regionalRe = /^((?=[\p{Regional_Indicator}]).)*$/u;
     var emojiArr = [];
 
     const [data, setData] = useState([
@@ -47,6 +48,9 @@ function KeywordSearch() {
 
           for(const match of result.text.matchAll(emojiRe)){
             const emoji = match[0];
+            if(regionalRe.test(emoji)){ // Don't add regional emojis
+              continue;
+            }
             console.log(`emoji detected ${ emoji }`);
             let newValue = true;
             for(var i = 0; i < emojiArr.length; i++){
@@ -157,7 +161,7 @@ function KeywordSearch() {
             <EmojiChart 
               data={EmojiData}
               width={200}
-              height={200}
+              height={350}
             />
             <ReactWordcloud
               style={{width: "30%", height: "250px"}}
