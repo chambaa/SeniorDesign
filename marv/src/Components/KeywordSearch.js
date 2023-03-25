@@ -7,6 +7,7 @@ import Map from './Map';
 import EmojiChart from './emojiChart.js';
 import Sentiment from 'sentiment';
 import ReactWordcloud from 'react-wordcloud';
+import logo from '../marv.png'
 
 function KeywordSearch() {
     const [keyword, setKeyword] = useState('');
@@ -63,21 +64,19 @@ function KeywordSearch() {
           }
 
           var sentiment = new Sentiment();
-          var result2 = sentiment.analyze(result.text);
-          if(result2.positive.length > 0) {
-            result2.positive.map(word => {
+          var resultWords = sentiment.analyze(result.text);
+          if(resultWords.positive.length > 0) {
+            resultWords.positive.map(word => {
               var val = posKeywords[word] ? posKeywords[word] + 1 : 1;
               posKeywords[word] = val
             })
           }
-          if(result2.negative.length > 0) {
-            result2.negative.map(word => {
+          if(resultWords.negative.length > 0) {
+            resultWords.negative.map(word => {
               var val = negKeywords[word] ? negKeywords[word] + 1 : 1;
               negKeywords[word] = val;
             })
           }
-          console.log(result2);
-
         })
 
         var newData = [];
@@ -116,7 +115,7 @@ function KeywordSearch() {
         setWords(tempWords)
 
         setCallbacks({
-          getWordColor: word => negKeywords[word.text] ? "red" : "green",
+          getWordColor: word => negKeywords[word.text] ? "#f29900" : "#79b68b",
           onWordClick: console.log,
           onWordMouseOver: console.log,
           getWordTooltip: word => `${word.text} (${word.value}) [${negKeywords[word.text] ? "negative" : "positive"}]`,
@@ -133,13 +132,13 @@ function KeywordSearch() {
       fontStyle: "normal",
       fontWeight: "normal",
     };
-    const size = [400, 200];    
+    const size = [250, 200];    
 
     return (
       <div>
         <div className="keyword">
-          <h1>Enter a Keyword!</h1>
-          <h3>Determine the public option of your product</h3>
+          <h1>Enter the name of your business</h1>
+          <h3>Determine the public option of your company</h3>
           <br/>
           <form onSubmit={handleSubmit} style={{"margin": "auto", "maxWidth": "500px", "position": "relative"}}>
               <div style={{"display":"flex"}}>
@@ -164,7 +163,7 @@ function KeywordSearch() {
               height={350}
             />
             <ReactWordcloud
-              style={{width: "30%", height: "250px"}}
+              style={{width: "300px", height: "300px"}}
               callbacks={callbacks}
               options={options}
               size={size}
@@ -176,7 +175,7 @@ function KeywordSearch() {
               keyword = {keyword2}
               />
           </LoadScript> 
-        </div> : <div className='dataVis'><h1>Search for a keyword to show analysis</h1></div>
+        </div> : <div className='logo'><img src={logo} className="App-logo" alt="logo" /></div>
         }
       </div>
     );

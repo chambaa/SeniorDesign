@@ -7,7 +7,8 @@
 
   padding-top: 30px;
   padding-bottom: 50px;
-  background-color: #a3c2c2!important;
+  /* background-color: #6696ff!important; */
+  background-color: #9cc0f9!important;
   color: white!important;
   text-align: center!important;
 }
@@ -15,7 +16,7 @@
 .keywordInput {
   padding: 10px;
   font-size: 17px;
-  border: 1px solid #a3c2c2;
+  border: 1px solid #9cc0f9;
   border-radius: 25px;
   float: left;
   width: 80%;
@@ -24,7 +25,7 @@
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   border-right: 0;
-  border-right: 1px solid #5c8a8a;
+  border-right: 1px solid #5491f5;
   outline: 0;
 }
 
@@ -33,10 +34,10 @@
   float: left;
   width: 20%;
   padding: 10px;
-  background: #5c8a8a;
+  background: #5491f5;
   color: white;
   font-size: 17px;
-  border: 1px solid #b3cccc;
+  border: 1px solid #9cc0f9;
   border-left: none;
   cursor: pointer;
   border-top-left-radius: 0;
@@ -45,11 +46,18 @@
 
 .dataVis {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   margin-top: 20px;
 }
 
 .pieChart {
   margin-left: 150px;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 600px;
 }
 
