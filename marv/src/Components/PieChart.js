@@ -26,7 +26,26 @@ const PieChart = props => {
       const groupWithUpdate = groupWithData
         .enter()
         .append("g")
-        .attr("class", "arc");
+        .attr("class", "arc")
+        .on("mouseover", function (d) {
+          console.log("over")
+        })
+        .on("mouseout", function (d) {
+          console.log("out")
+        })
+        .on("click", function(d, event) {
+            var sent = event.data.property
+            var temp = []
+            props.sent.map(result => {
+              if(result.sentiment === sent) {
+                console.log(result.text)
+                temp.push(result.text)
+              }
+              return null;
+            })
+            props.setDialogTweets(temp)
+            props.setOpen(true)
+        });
 
       const path = groupWithUpdate
         .append("path")
@@ -52,7 +71,7 @@ const PieChart = props => {
         .attr("text-anchor", "middle")
         .attr("alignment-baseline", "middle")
         .style("fill", "white")
-        .style("font-size", 10)
+        .style("font-size", 12)
         .transition()
         .attr("transform", d => `translate(${createArc.centroid(d)})`)
         .text(function(d){ return d.data.property; });
