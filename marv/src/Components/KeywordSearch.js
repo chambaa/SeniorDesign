@@ -8,17 +8,35 @@ import EmojiChart from './emojiChart.js';
 import Sentiment from 'sentiment';
 import ReactWordcloud from 'react-wordcloud';
 import logo from '../marv.png'
+import { select } from "d3-selection";
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+
+import "tippy.js/dist/tippy.css";
+import "tippy.js/animations/scale.css";
 
 function KeywordSearch() {
     const [keyword, setKeyword] = useState('');
     const [keyword2, setKeyword2] = useState('');
     const [words, setWords] = useState([]);
+    const [dialogTweets, setDialogTweets] = useState([]);
+    const [sent, setSent] = useState([]);
     const [callbacks, setCallbacks] = useState({});
+    const [open, setOpen] = React.useState(false);
+    const theme = useTheme();
+    const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
     var pos = 0;
     var neg = 0;
     var neut = 0;
     var negKeywords = {};
     var posKeywords = {};
+    var setSentRes = [];
 
     const emojiRe = /(\p{EPres}|\p{ExtPict})/gu;
     const regionalRe = /^((?=[\p{Regional_Indicator}]).)*$/u;
@@ -30,13 +48,52 @@ function KeywordSearch() {
 
     const [EmojiData, setEmojiData] = useState([{}]);
 
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+  
+    const handleClose = () => {
+      setOpen(false);
+    };
+
+    function getCallback(callback) {
+      return function (word, event) {
+        const isActive = callback !== "onWordMouseOut";
+        const element = event.target;
+        console.log(element)
+        const text = select(element);
+        var val = word.text;
+        text
+          .on("click", () => {
+            var temp = []
+            setSentRes.map(result => {
+              if(result.text.includes(val)) {
+                console.log(result.text)
+                temp.push(result.text)
+              }
+              return null;
+            })
+            setDialogTweets(temp)
+            if (isActive) {
+              handleClickOpen();
+              console.log("clicked")
+            }
+          })
+          .transition()
+          .attr("background", "white")
+          .attr("font-weight", isActive ? "bold" : "none")
+          .attr("text-decoration", isActive ? "underline" : "none");
+      };
+    }
+
     const handleSubmit = async (event) => {
         event.preventDefault();
        
         var sentimentResult = await TwitterAPI(keyword)
+        setSentRes = sentimentResult;
+        setSent(sentimentResult)
 
         sentimentResult.map(result => {
-          console.log(result)
           if(result.sentiment === "Positive") {
             pos++;
           }
@@ -69,25 +126,28 @@ function KeywordSearch() {
             resultWords.positive.map(word => {
               var val = posKeywords[word] ? posKeywords[word] + 1 : 1;
               posKeywords[word] = val
+              return null;
             })
           }
           if(resultWords.negative.length > 0) {
             resultWords.negative.map(word => {
               var val = negKeywords[word] ? negKeywords[word] + 1 : 1;
               negKeywords[word] = val;
+              return null;
             })
           }
+          return null;
         })
 
         var newData = [];
         if(pos > 0) {
-          newData.push({property: 'Positive', value: pos * 10});
+          newData.push({property: 'Positive', value: pos});
         }
         if(neg > 0) {
-          newData.push({property: 'Negative', value: neg * 10});
+          newData.push({property: 'Negative', value: neg});
         }
         if(neut > 0) {
-          newData.push({property: 'Neutral', value: neut * 10});
+          newData.push({property: 'Neutral', value: neut});
         }
 
         console.log(newData)
@@ -105,20 +165,21 @@ function KeywordSearch() {
           tempWords.push(obj)
         }
         for (var negkey in negKeywords) {
-          var obj = {
+          var objNeg = {
             text: negkey,
             value: negKeywords[negkey],
           }    
-          tempWords.push(obj)
+          tempWords.push(objNeg)
         }
         console.log(tempWords)
         setWords(tempWords)
 
         setCallbacks({
           getWordColor: word => negKeywords[word.text] ? "#f29900" : "#79b68b",
-          onWordClick: console.log,
-          onWordMouseOver: console.log,
-          getWordTooltip: word => `${word.text} (${word.value}) [${negKeywords[word.text] ? "negative" : "positive"}]`,
+          getWordTooltip: word => `The word "${word.text}" appears ${word.value} times. [${negKeywords[word.text] ? "negative" : "positive"}]`,
+          onWordClick: getCallback("onWordClick"),
+          onWordMouseOut: getCallback("onWordMouseOut"),
+          onWordMouseOver: getCallback("onWordMouseOver"),
         });
     }
     const lib = ["places"];
@@ -138,7 +199,7 @@ function KeywordSearch() {
       <div>
         <div className="keyword">
           <h1>Enter the name of your business</h1>
-          <h3>Determine the public option of your company</h3>
+          <h3>Determine the public opinion of your company</h3>
           <br/>
           <form onSubmit={handleSubmit} style={{"margin": "auto", "maxWidth": "500px", "position": "relative"}}>
               <div style={{"display":"flex"}}>
@@ -147,6 +208,28 @@ function KeywordSearch() {
               </div>
           </form>
         </div>
+        <Dialog
+          fullScreen={fullScreen}
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="responsive-dialog-title"
+        >
+          <DialogTitle id="responsive-dialog-title">
+            {"Tweets"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText style={{overflowY: "auto", maxHeight: "200px"}}>
+              {dialogTweets.map((text) => (
+                <li>{text}</li>
+              ))}
+            </DialogContentText>
+            </DialogContent>
+          <DialogActions>
+            <Button autoFocus onClick={handleClose}>
+              Close
+            </Button>
+          </DialogActions>
+        </Dialog>
         {keyword2 !== '' ?
         <div>
           <div className='dataVis'>
@@ -156,6 +239,9 @@ function KeywordSearch() {
               height={370}
               innerRadius={0}
               outerRadius={150}
+              setDialogTweets={setDialogTweets}
+              setOpen={setOpen}
+              sent={sent}
             />
             <EmojiChart 
               data={EmojiData}
