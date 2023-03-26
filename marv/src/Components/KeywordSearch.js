@@ -8,6 +8,7 @@ import EmojiChart from './emojiChart.js';
 import Sentiment from 'sentiment';
 import ReactWordcloud from 'react-wordcloud';
 import logo from '../marv.png'
+import logo2 from '../marv2.png'
 import { select } from "d3-selection";
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -198,6 +199,9 @@ function KeywordSearch() {
     return (
       <div>
         <div className="keyword">
+        <div style={{display: "flex", justifyContent: "space-between"}}>
+          <img src={logo2} alt="logo" style={{alignSelf: "flex-start"}}/>
+          <div style={{marginRight: `${window.innerWidth/3}px`}}>
           <h1>Enter the name of your business</h1>
           <h3>Determine the public opinion of your company</h3>
           <br/>
@@ -207,6 +211,8 @@ function KeywordSearch() {
               <button className="keywordBtn" type="button" id="keywordSearchBtn" onClick={handleSubmit}><i id="keywordSearchIcon" className="fa fa-search"></i></button>
               </div>
           </form>
+          </div>
+          </div>
         </div>
         <Dialog
           fullScreen={fullScreen}
@@ -261,7 +267,7 @@ function KeywordSearch() {
               keyword = {keyword2}
               />
           </LoadScript> 
-        </div> : <div className='logo'><img src={logo} className="App-logo" alt="logo" /></div>
+        </div> : <div className='logo'><img src={logo} alt="logo" className="spin" /></div> //<img src={logo} className="App-logo" alt="logo" />
         }
       </div>
     );
