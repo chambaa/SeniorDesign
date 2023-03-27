@@ -28,11 +28,13 @@ async function TwitterAPI(keyword) {
         .catch(error => {
             console.error('There was an error!', error);
         });
-        return await SentimentAnalysis(dataTest);
-    // return (
-    //   <div>
-    //   </div>
-    // );
+        console.log(dataTest.data.meta.result_count)
+        if(dataTest.data.meta.result_count > 0) {
+          return await SentimentAnalysis(dataTest);
+        }
+        else {
+          return []
+        }
   }
   
   export default TwitterAPI;
