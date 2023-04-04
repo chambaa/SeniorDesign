@@ -2,9 +2,7 @@ import React, { useEffect, useRef } from "react";
 import {
   axisBottom,
   axisLeft,
-  ScaleBand,
   scaleBand,
-  ScaleLinear,
   scaleLinear,
   select,
   format
@@ -68,7 +66,7 @@ function BarChart({ data }) {
     .domain([0, Math.max(...data.map(({ value }) => value))])
     .range([height, 0]);
 
-  if(data.length == 0){
+  if(data.length === 0){
     return(
       <span>No Emojis :&#40;</span>
     )
