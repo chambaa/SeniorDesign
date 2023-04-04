@@ -114,11 +114,14 @@ function KeywordSearch() {
             for(var i = 0; i < emojiArr.length; i++){
               if(emojiArr[i]['property'] === emoji){
                 emojiArr[i]['value'] += 1;
+                emojiArr[i]['results'].push(result.text);
                 newValue = false;
               }
             }
-            if(newValue){emojiArr.push({'property': emoji, 'value': 1})}
+            if(newValue){emojiArr.push({'property': emoji, 'value': 1, 'results': [result.text]})}
           }
+
+          console.log(emojiArr);
 
           var sentiment = new Sentiment();
           var resultWords = sentiment.analyze(result.text);

@@ -47,10 +47,15 @@ function Bars({ data, height, scaleX, scaleY }) {
           width={scaleX.bandwidth()}
           height={height - scaleY(value)}
           fill="#5491f5"
+          onMouseOver={() => myLog("hello world I'm running")}
         />
       ))}
     </>
   );
+}
+
+function myLog(data){
+  console.log(data);
 }
 
 function BarChart({ data }) {
