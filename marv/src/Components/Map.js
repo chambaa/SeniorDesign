@@ -9,35 +9,47 @@ const containerStyle = {
   margin: '10px'
 };
 
-let coords = [];
-
 const Map = props => {
   const [center, setCenter] = useState({ lat: 39.103119, lng: -84.512016 });
   const [coordsResult, setcoordsResult] = useState([]);
+  const [showInfoWindow, setShowInfoWindow] = useState(null);
 
+  const handleMarkerClick = (i) => {
+    setShowInfoWindow(i === showInfoWindow ? false : i);
+  };
+
+  const customMarkerIcon = {
+    url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+    labelOrigin: new window.google.maps.Point(25, 40)
+  };
+  
   const onMapLoad = map => {
+    let coords = [];
+    
     let request = {
-      query: props.keyword,
-      fields: ["name", "geometry", "rating"]
+      location: center,
+      name: props.keyword,
+      rankBy: google.maps.places.RankBy.DISTANCE,
     };
 
     let service = new window.google.maps.places.PlacesService(map);
 
-    service.findPlaceFromQuery(request, (results, status) => {
+    
+    service.nearbySearch(request, (results, status) => {
       if (status === window.google.maps.places.PlacesServiceStatus.OK) {
         for (var i = 0; i < results.length; i++) {
-          coords.push(results[i]);
+          coords.push(results[i]);         
         }
-
         setCenter(results[0].geometry.location)
         setcoordsResult(coords)
       }
-    });
+    })
   };
 
-  return (
+  return (   
     <div>
       <GoogleMap
+        id="map"
         center={center}
         zoom={13}
         onLoad={map => onMapLoad(map)}
@@ -46,17 +58,28 @@ const Map = props => {
         {coordsResult !== [] &&
           coordsResult.map(function(results, i) {
             return (
-              <Marker key={i} position={results.geometry.location}>
+              <Marker key={i} 
+                position={results.geometry.location} 
+                label={{
+                  text: results.name,
+                  fontWeight: "bold",
+                }}
+                icon={customMarkerIcon}
+                animation={google.maps.Animation.DROP}
+                onClick={() => handleMarkerClick(i)}
+              >   
+              {showInfoWindow === i && (  
                 <InfoWindow 
-                    options={{ maxWidth: 300 }}
-                    position={results.geometry.location}
+                  options={{ maxWidth: 250 }}
+                  position={results.geometry.location}
                 >
                   <div>
-                    <h3>{results.name}</h3>
+                    <h3>Name: {results.name}</h3>
                     <h4>Rating: {results.rating}</h4>
-                  </div>
-                  
-                </InfoWindow>
+                  </div>                 
+                </InfoWindow> 
+              )}
+
               </Marker>
             );
           })}
