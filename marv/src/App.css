@@ -61,3 +61,7 @@
   height: 600px;
 }
 
+.arc, rect {
+  cursor: pointer;
+}
+

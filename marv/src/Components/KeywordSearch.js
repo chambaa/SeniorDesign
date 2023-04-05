@@ -150,11 +150,9 @@ function KeywordSearch() {
           newData.push({property: 'Neutral', value: neut});
         }
 
-        console.log(newData)
         setData(newData)
         setKeyword2(keyword)
         setEmojiData(emojiArr)
-        console.log(emojiArr);
 
         const tempWords = [];
         for (var poskey in posKeywords) {
@@ -247,6 +245,9 @@ function KeywordSearch() {
               data={EmojiData}
               width={200}
               height={350}
+              setDialogTweets={setDialogTweets}
+              setOpen={setOpen}
+              sent={sent}
             />
             <ReactWordcloud
               style={{width: "300px", height: "300px"}}
