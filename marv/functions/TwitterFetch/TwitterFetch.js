@@ -7,7 +7,8 @@ exports.handler = async function(event, context) {
       "authorization": `Bearer ${token}`,  
     }
     // Change max_results=10 to 100 to fetch more
-    const response = await fetch(`https://api.twitter.com/2/tweets/search/recent?query=${event.body}%20lang%3Aen&tweet.fields=author_id,created_at,entities,geo,in_reply_to_user_id,lang,possibly_sensitive,referenced_tweets,source&max_results=10`, {headers: headers})
+    var searchedPhrase = event.body.replace("&", "and")
+    const response = await fetch(`https://api.twitter.com/2/tweets/search/recent?query=-is%3Aretweet%20"${searchedPhrase}"%20lang%3Aen&tweet.fields=author_id,created_at,entities,geo,in_reply_to_user_id,lang,possibly_sensitive,referenced_tweets,source&max_results=10`, {headers: headers})
     if (!response.ok) {
       // NOT res.status >= 200 && res.status < 300
       return { statusCode: response.status, body: response.statusText }
