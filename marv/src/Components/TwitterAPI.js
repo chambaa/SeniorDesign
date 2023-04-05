@@ -28,7 +28,6 @@ async function TwitterAPI(keyword) {
         .catch(error => {
             console.error('There was an error!', error);
         });
-        console.log(dataTest.data.meta.result_count)
         if(dataTest.data.meta.result_count > 0) {
           return await SentimentAnalysis(dataTest);
         }

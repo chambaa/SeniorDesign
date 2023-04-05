@@ -28,17 +28,14 @@ const PieChart = props => {
         .append("g")
         .attr("class", "arc")
         .on("mouseover", function (d) {
-          console.log("over")
         })
         .on("mouseout", function (d) {
-          console.log("out")
         })
         .on("click", function(d, event) {
             var sent = event.data.property
             var temp = []
             props.sent.map(result => {
               if(result.sentiment === sent) {
-                console.log(result.text)
                 temp.push(result.text)
               }
               return null;

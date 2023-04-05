@@ -1,4 +1,4 @@
-import React, { useState }  from 'react';
+import React, { useState, useRef }  from 'react';
 import 'font-awesome/css/font-awesome.min.css';
 import TwitterAPI from './TwitterAPI';
 import PieChart from './PieChart';
@@ -24,7 +24,6 @@ import "tippy.js/animations/scale.css";
 
 function KeywordSearch() {
     const [keyword, setKeyword] = useState('');
-    const [keyword2, setKeyword2] = useState('');
     const [words, setWords] = useState([]);
     const [dialogTweets, setDialogTweets] = useState([]);
     const [sent, setSent] = useState([]);
@@ -59,19 +58,22 @@ function KeywordSearch() {
       setOpen(false);
     };
 
+    function isLetter(str) {
+      return str.length === 1 && str.match(/[a-z]/i);
+    }
+
     function getCallback(callback) {
       return function (word, event) {
         const isActive = callback !== "onWordMouseOut";
         const element = event.target;
-        console.log(element)
         const text = select(element);
         var val = word.text;
         text
           .on("click", () => {
             var temp = []
             setSentRes.map(result => {
-              if(result.text.includes(val)) {
-                console.log(result.text)
+              if((result.text.toLowerCase().includes(" " + val) || result.text.toLowerCase().indexOf(val) === 0 || result.text.toLowerCase().includes('"' + val)) &&
+              !isLetter(result.text.at( result.text.toLowerCase().indexOf(val) + val.length))) {
                 temp.push(result.text)
               }
               return null;
@@ -79,7 +81,6 @@ function KeywordSearch() {
             setDialogTweets(temp)
             if (isActive) {
               handleClickOpen();
-              console.log("clicked")
             }
           })
           .transition()
@@ -88,111 +89,109 @@ function KeywordSearch() {
           .attr("text-decoration", isActive ? "underline" : "none");
       };
     }
+    const inputEl = useRef(null);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-       
-        var sentimentResult = await TwitterAPI(keyword)
-        setSentRes = sentimentResult;
-        setSent(sentimentResult)
-        console.log(sentimentResult)
-        if(sentimentResult.length > 0) {
-          setTweetsRet(true)
-          setMesg("")
+        var inputVal = inputEl.current.value
+        if(inputVal) {
+          var sentimentResult = await TwitterAPI(inputVal)
+          setSentRes = sentimentResult;
+          setSent(sentimentResult)
+          if(sentimentResult.length > 0) {
+            setTweetsRet(true)
+            setMesg("")
 
-          sentimentResult.map(result => {
-            if(result.sentiment === "Positive") {
-              pos++;
-            }
-            else if(result.sentiment === "Negative") {
-              neg++;
-            }
-            else if(result.sentiment === "Neutral") {
-              neut++;
-            }
-
-            for(const match of result.text.matchAll(emojiRe)){
-              const emoji = match[0];
-              if(regionalRe.test(emoji)){ // Don't add regional emojis
-                continue;
+            sentimentResult.map(result => {
+              if(result.sentiment === "Positive") {
+                pos++;
               }
-              console.log(`emoji detected ${ emoji }`);
-              let newValue = true;
-              for(var i = 0; i < emojiArr.length; i++){
-                if(emojiArr[i]['property'] === emoji){
-                  emojiArr[i]['value'] += 1;
-                  newValue = false;
+              else if(result.sentiment === "Negative") {
+                neg++;
+              }
+              else if(result.sentiment === "Neutral") {
+                neut++;
+              }
+
+              for(const match of result.text.matchAll(emojiRe)){
+                const emoji = match[0];
+                if(regionalRe.test(emoji)){ // Don't add regional emojis
+                  continue;
                 }
+                let newValue = true;
+                for(var i = 0; i < emojiArr.length; i++){
+                  if(emojiArr[i]['property'] === emoji){
+                    emojiArr[i]['value'] += 1;
+                    newValue = false;
+                  }
+                }
+                if(newValue){emojiArr.push({'property': emoji, 'value': 1})}
               }
-              if(newValue){emojiArr.push({'property': emoji, 'value': 1})}
+
+              var sentiment = new Sentiment();
+              var resultWords = sentiment.analyze(result.text);
+              if(resultWords.positive.length > 0) {
+                resultWords.positive.map(word => {
+                  var val = posKeywords[word] ? posKeywords[word] + 1 : 1;
+                  posKeywords[word] = val
+                  return null;
+                })
+              }
+              if(resultWords.negative.length > 0) {
+                resultWords.negative.map(word => {
+                  var val = negKeywords[word] ? negKeywords[word] + 1 : 1;
+                  negKeywords[word] = val;
+                  return null;
+                })
+              }
+              return null;
+            })
+
+            var newData = [];
+            if(pos > 0) {
+              newData.push({property: 'Positive', value: pos});
+            }
+            if(neg > 0) {
+              newData.push({property: 'Negative', value: neg});
+            }
+            if(neut > 0) {
+              newData.push({property: 'Neutral', value: neut});
             }
 
-            var sentiment = new Sentiment();
-            var resultWords = sentiment.analyze(result.text);
-            if(resultWords.positive.length > 0) {
-              resultWords.positive.map(word => {
-                var val = posKeywords[word] ? posKeywords[word] + 1 : 1;
-                posKeywords[word] = val
-                return null;
-              })
+            setData(newData)
+            setKeyword(inputVal)
+            setEmojiData(emojiArr)
+
+            const tempWords = [];
+            for (var poskey in posKeywords) {
+              var obj = {
+                text: poskey,
+                value: posKeywords[poskey],
+              }    
+              tempWords.push(obj)
             }
-            if(resultWords.negative.length > 0) {
-              resultWords.negative.map(word => {
-                var val = negKeywords[word] ? negKeywords[word] + 1 : 1;
-                negKeywords[word] = val;
-                return null;
-              })
+            for (var negkey in negKeywords) {
+              var objNeg = {
+                text: negkey,
+                value: negKeywords[negkey],
+              }    
+              tempWords.push(objNeg)
             }
-            return null;
-          })
+            setWords(tempWords)
 
-          var newData = [];
-          if(pos > 0) {
-            newData.push({property: 'Positive', value: pos});
+            setCallbacks({
+              getWordColor: word => negKeywords[word.text] ? "#f29900" : "#79b68b",
+              getWordTooltip: word => `The word "${word.text}" appears ${word.value} times. [${negKeywords[word.text] ? "negative" : "positive"}]`,
+              onWordClick: getCallback("onWordClick"),
+              onWordMouseOut: getCallback("onWordMouseOut"),
+              onWordMouseOver: getCallback("onWordMouseOver"),
+            });
           }
-          if(neg > 0) {
-            newData.push({property: 'Negative', value: neg});
+          else {
+            setTweetsRet(false)
+            setMesg("No Tweets Returned for provided keyword.")
           }
-          if(neut > 0) {
-            newData.push({property: 'Neutral', value: neut});
-          }
-
-          console.log(newData)
-          setData(newData)
-          setKeyword2(keyword)
-          setEmojiData(emojiArr)
-          console.log(emojiArr);
-
-          const tempWords = [];
-          for (var poskey in posKeywords) {
-            var obj = {
-              text: poskey,
-              value: posKeywords[poskey],
-            }    
-            tempWords.push(obj)
-          }
-          for (var negkey in negKeywords) {
-            var objNeg = {
-              text: negkey,
-              value: negKeywords[negkey],
-            }    
-            tempWords.push(objNeg)
-          }
-          console.log(tempWords)
-          setWords(tempWords)
-
-          setCallbacks({
-            getWordColor: word => negKeywords[word.text] ? "#f29900" : "#79b68b",
-            getWordTooltip: word => `The word "${word.text}" appears ${word.value} times. [${negKeywords[word.text] ? "negative" : "positive"}]`,
-            onWordClick: getCallback("onWordClick"),
-            onWordMouseOut: getCallback("onWordMouseOut"),
-            onWordMouseOver: getCallback("onWordMouseOver"),
-          });
-        }
-        else {
-          setTweetsRet(false)
-          setMesg("No Tweets Returned for provided keyword.")
-        }
+      }
     }
     const lib = ["places"];
     const key = "AIzaSyBgt_ybrpI0hzarHDx7Og1LkV5mS8lheQw"; // PUT GMAP API KEY HERE
@@ -218,7 +217,7 @@ function KeywordSearch() {
           <br/>
           <form onSubmit={handleSubmit} style={{"margin": "auto", "maxWidth": "500px", "position": "relative"}}>
               <div style={{"display":"flex"}}>
-              <input className="keywordInput" autoComplete='off' type="text" name="keyword" value={keyword} onChange={(e) => setKeyword(e.target.value)}/>
+              <input ref={inputEl} className="keywordInput" autoComplete='off' type="text" name="keyword"/>
               <button className="keywordBtn" type="button" id="keywordSearchBtn" onClick={handleSubmit}><i id="keywordSearchIcon" className="fa fa-search"></i></button>
               </div>
           </form>
@@ -236,8 +235,8 @@ function KeywordSearch() {
           </DialogTitle>
           <DialogContent>
             <DialogContentText style={{overflowY: "auto", maxHeight: "200px"}}>
-              {dialogTweets.map((text) => (
-                <li>{text}</li>
+              {dialogTweets.map((text, index) => (
+                <li key={index}>{text}</li>
               ))}
             </DialogContentText>
             </DialogContent>
@@ -247,7 +246,7 @@ function KeywordSearch() {
             </Button>
           </DialogActions>
         </Dialog>
-        {keyword2 !== '' && tweetsRet ?
+        {keyword !== '' && tweetsRet ?
         <div>
           <div className='dataVis'>
             <PieChart 
@@ -278,7 +277,7 @@ function KeywordSearch() {
           </div>  
           <LoadScript googleMapsApiKey={key} libraries={lib}>
             <Map 
-              keyword = {keyword2}
+              keyword = {keyword}
               />
           </LoadScript> 
         </div> : <div style={{padding: "5px"}}> 
