@@ -19,7 +19,7 @@ const PieChart = props => {
       const data = createPie(props.data);
       const prevData = createPie(cache.current);
       const group = d3.select(ref.current);
-      const groupWithData = group.selectAll("g.arc").data(data);
+      const groupWithData = group.selectAll("arc").data(data);
 
       groupWithData.exit().remove();
 

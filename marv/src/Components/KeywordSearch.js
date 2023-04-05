@@ -114,14 +114,11 @@ function KeywordSearch() {
             for(var i = 0; i < emojiArr.length; i++){
               if(emojiArr[i]['property'] === emoji){
                 emojiArr[i]['value'] += 1;
-                emojiArr[i]['results'].push(result.text);
                 newValue = false;
               }
             }
-            if(newValue){emojiArr.push({'property': emoji, 'value': 1, 'results': [result.text]})}
+            if(newValue){emojiArr.push({'property': emoji, 'value': 1})}
           }
-
-          console.log(emojiArr);
 
           var sentiment = new Sentiment();
           var resultWords = sentiment.analyze(result.text);
@@ -153,11 +150,9 @@ function KeywordSearch() {
           newData.push({property: 'Neutral', value: neut});
         }
 
-        console.log(newData)
         setData(newData)
         setKeyword2(keyword)
         setEmojiData(emojiArr)
-        console.log(emojiArr);
 
         const tempWords = [];
         for (var poskey in posKeywords) {
@@ -250,6 +245,9 @@ function KeywordSearch() {
               data={EmojiData}
               width={200}
               height={350}
+              setDialogTweets={setDialogTweets}
+              setOpen={setOpen}
+              sent={sent}
             />
             <ReactWordcloud
               style={{width: "300px", height: "300px"}}

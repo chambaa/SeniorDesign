@@ -36,7 +36,7 @@ function AxisLeft({ scale }) {
   return <g ref={ref} />;
 }
 
-function Bars({ data, height, scaleX, scaleY }) {
+function Bars({ data, height, scaleX, scaleY, stateSent, setDialogTweets, setOpen }) {
   return (
     <>
       {data.map(({ value, property }) => (
@@ -47,18 +47,24 @@ function Bars({ data, height, scaleX, scaleY }) {
           width={scaleX.bandwidth()}
           height={height - scaleY(value)}
           fill="#5491f5"
-          onMouseOver={() => myLog("hello world I'm running")}
+          onClick={() => {
+            var temp = []
+            stateSent.map(result => {
+              if(result.text.includes(property)) {
+                temp.push(result.text)
+              }
+              return null;
+            })
+            setDialogTweets(temp)
+            setOpen(true)
+          }}
         />
       ))}
     </>
   );
 }
 
-function myLog(data){
-  console.log(data);
-}
-
-function BarChart({ data }) {
+function BarChart({ data, sent, setDialogTweets, setOpen }) {
   const margin = { top: 10, right: 0, bottom: 30, left: 30 };
   const width = 500 - margin.left - margin.right;
   const height = 300 - margin.top - margin.bottom;
@@ -85,7 +91,7 @@ function BarChart({ data }) {
       <g transform={`translate(${margin.left}, ${margin.top})`}>
         <AxisBottom scale={scaleX} transform={`translate(0, ${height})`} />
         <AxisLeft scale={scaleY} />
-        <Bars data={data} height={height} scaleX={scaleX} scaleY={scaleY} />
+        <Bars data={data} height={height} scaleX={scaleX} scaleY={scaleY} stateSent={sent} setDialogTweets={setDialogTweets} setOpen={setOpen} />
       </g>
     </svg>
   );
