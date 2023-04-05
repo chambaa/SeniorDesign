@@ -264,6 +264,9 @@ function KeywordSearch() {
               data={EmojiData}
               width={200}
               height={350}
+              setDialogTweets={setDialogTweets}
+              setOpen={setOpen}
+              sent={sent}
             />
             <ReactWordcloud
               style={{width: "300px", height: "300px"}}
