@@ -77,10 +77,6 @@ const Map = props => {
             return (
               <Marker key={i} 
                 position={results.geometry.location} 
-                label={{
-                  text: results.name,
-                  fontWeight: "bold",
-                }}
                 icon={customMarkerIcon}
                 animation={google.maps.Animation.DROP}
                 onClick={() => handleMarkerClick(i)}
