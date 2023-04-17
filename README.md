@@ -35,7 +35,7 @@ TODO
 
 #### Final Self-Assessments (spring semester)
 * [Anna](./HW-Essays/Final_Self_Assesment_Chambers.pdf)
-* [Veronica](./HW-Essays/Final-Self_Assesment_Veronica_Ufferman.pdf)
+* [Veronica](./HW-Essays/Final_Self_Assesment_Ufferman.pdf)
 * [Reed](./HW-Essays/Final_Self_Assessment_Klein.pdf)
 * [Mario](./HW-Essays/)
 
