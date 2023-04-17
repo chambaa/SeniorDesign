@@ -36,7 +36,7 @@ TODO
 #### Final Self-Assessments (spring semester)
 * [Anna](./HW-Essays/Final_Self_Assesment_Chambers.pdf)
 * [Veronica](./HW-Essays/)
-* [Reed](./HW-Essays/)
+* [Reed](./HW-Essays/Final_Self_Assessment_Klein.pdf)
 * [Mario](./HW-Essays/)
 
 ### Summary of Hours and Justification (one per individual team member)
@@ -53,6 +53,12 @@ TODO
 #### Mario Eid
 
 #### Reed Klein
+* Research libraries for visualization: 2 hours
+* Emoji Bar Chart: 2 hours
+* Interactivity and filtering emoji barchart: 2 hours
+* Non-updating pie chart fix: 1.5 hours
+* Non-updating map: 2 hours
+* Styling/Miscellanious: 1 hour
 
 #### Veronica Ufferman
 (See Meeting notes for additional hour justification for all team members)
