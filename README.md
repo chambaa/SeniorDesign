@@ -37,7 +37,7 @@ TODO
 * [Anna](./HW-Essays/Final_Self_Assesment_Chambers.pdf)
 * [Veronica](./HW-Essays/Final_Self_Assesment_Ufferman.pdf)
 * [Reed](./HW-Essays/Final_Self_Assessment_Klein.pdf)
-* [Mario](./HW-Essays/)
+* [Mario](./HW-Essays/Final_Self_Assessment_Eid.pdf)
 
 ### Summary of Hours and Justification (one per individual team member)
 #### Anna Chambers
@@ -51,6 +51,11 @@ TODO
 * Bug fixes: 3 hours
   
 #### Mario Eid
+* Research libraries for visualization: 2 hours
+* Google map display: 4 hours
+* Google map integration: 2 hours
+* Google map marker and search: 4 hours
+* Styling/Miscellanious: 1 hour
 
 #### Reed Klein
 * Research libraries for visualization: 2 hours
