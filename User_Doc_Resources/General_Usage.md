@@ -9,6 +9,9 @@ This application will use the keyword that you type in to pull related tweets to
 - Walmart
 - Amazon
 - Nike
-- Tesla
+- Kroger
 
 ## Tips and Tricks
+- You can click on any of the data visualization elements (pie chart, emoji bar chart, and wordcloud) to see a list of the associated tweets.
+- If the map is not updating, refresh your screen. This may happen if you search for a company that can't be found on the map.
+- See [FAQ](./FAQ.md) for answers to other common problems
