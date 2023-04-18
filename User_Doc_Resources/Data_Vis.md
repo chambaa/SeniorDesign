@@ -1,11 +1,20 @@
 # Data Visualizations
-## Manipulation
-- Some of the graphs used to represent the emotions associated with the keyword search are manipulable.
-- Bar charts, for example, are sortable based on highest to lowest, alphabetical order, lowest to highest, etc. 
-- An example of this can be found [here](https://observablehq.com/@d3/bar-chart-transitions)
+## Pie Chart
+- The Pie Chart shows the percentage of the positive, negative, and neutral tweets. 
+- Since the Twitter API returns 100 tweets the perentage is determined by the number of tweets with the certain sentiment.
+- The Positive section is colored green, the negative section is colored orange, and the neutral section is gray.
   
-## Filtering
-- Not all sentiments are necessary to view at once. To filter the sentiments shown on the visualization, just click one of the sentiments in the legend and the graph will update without that sentiment’s data. To make it reappear, simply click it again.
+## Emoji Bar Chart
+- Bar Chart shows the most used emojis associated with the business searched for.
+- Emojis are pulled directly from the tweets.
+- The Height of the bar shows the number of times the emoji was seen.
   
-## Explanation
-- All charts will have some kind of explanation that can be toggled by clicking the question mark icon underneath the chart. This will make a caption box appear underneath that graphic that will explain what the information displayed by the visualization. 
+## WordCloud
+- The wordcloud shows the most used positive and negative words associated with the company.
+- The positive words are colored green and the negative words are colored orange.
+- The size of the word shows the amount of time it was used.
+- When you hover over a word it will show a tooltip that shows the exact amount of time the word was used.
+
+## Clicking
+- Each of the above elements are clickable.
+- When you click on a section of the pie chart, an emoji bar, or a word a dialog will popup to show the tweets with that element.

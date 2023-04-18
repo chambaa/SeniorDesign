@@ -3,7 +3,7 @@
 * In the GitHub repo click the Code button. 
 * A drop down will appear where you can copy the code URL.
 * In a terminal cd into the folder you want to put the code.
-* run `git clone ‘above URL’`
+* run `git clone <above URL>`
 ## Configure the app
 In your terminal run:
 * `cd SeniorDesign/marv`
