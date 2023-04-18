@@ -13,7 +13,8 @@
 ### Project Description
 The goal of this project is to create a web application that uses twitter and sentiment analysis to determine the public opinion about businesses based on location. Once public opinion has been determined, we will use data visualization to display sentiment analysis and nearby ratings based on geographic location. This product is intended to be used by businesses to analyze the public’s opinion.
 ### User Interface Specification (optional inclusion of UI design)
-TODO
+[User Interface Specification](./User_Interface_Design.pdf)
+
 ### Test Plan and Results
 [Test Plan and Results](./Test_Plan.pdf)
 
